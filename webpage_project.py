@@ -23,32 +23,11 @@ def main_display():
     return render_template('main.html')
 
 
-@app.route('/main2')
-def data_selection():
-    return render_template('main2.html')
-
-
-@app.route('/main2', methods=['POST'])
-def model_perform2():
-    data_select = request.json["select_data"]
-    data_select = data_select.split(";")
-    index = int(data_select[0])
-    file_name = data_select[1]
-    data_service = DataService(file="static\\data\\" + file_name)
-    data_select = data_service.get_item(index)
-    return jsonify({"output": data_select["Answer"]})
-
-
-# # with nlp model
 # @app.route('/main2')
 # def data_selection():
-#     # load the model as global variable
-#     global model
-#     model = ModelService(r"static/model/output_reasoning_iteration")
 #     return render_template('main2.html')
 
 
-# # with nlp model
 # @app.route('/main2', methods=['POST'])
 # def model_perform2():
 #     data_select = request.json["select_data"]
@@ -57,9 +36,30 @@ def model_perform2():
 #     file_name = data_select[1]
 #     data_service = DataService(file="static\\data\\" + file_name)
 #     data_select = data_service.get_item(index)
-#     problem = data_select["Body"] + data_select["Question"]
-#     output = model.forward_model(problem)
-#     return jsonify({"output": output})
+#     return jsonify({"output": data_select["Answer"]})
+
+
+# with nlp model
+@app.route('/main2')
+def data_selection():
+    # load the model as global variable
+    global model
+    model = ModelService(r"static/model/output_reasoning_iteration")
+    return render_template('main2.html')
+
+
+# with nlp model
+@app.route('/main2', methods=['POST'])
+def model_perform2():
+    data_select = request.json["select_data"]
+    data_select = data_select.split(";")
+    index = int(data_select[0])
+    file_name = data_select[1]
+    data_service = DataService(file="static\\data\\" + file_name)
+    data_select = data_service.get_item(index)
+    problem = data_select["Body"] + data_select["Question"]
+    output = model.forward_model(problem)
+    return jsonify({"output": output})
 
 
 @app.route('/getdataset', methods=['POST'])
