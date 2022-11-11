@@ -3,3 +3,4 @@ pandas
 pytorch
 transformers
 Flask
+SentencePiece
