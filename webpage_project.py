@@ -1,4 +1,5 @@
 from flask import Flask
+import socket
 from flask import render_template
 from flask import request, redirect, url_for, jsonify
 
@@ -78,4 +79,4 @@ def data_selection2():
 
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    app.run(port=8080, host=socket.gethostname(), debug=True)
