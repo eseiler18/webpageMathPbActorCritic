@@ -40,7 +40,7 @@ def model_perform2():
     data_select = data_select.split(";")
     index = int(data_select[0])
     file_name = data_select[1]
-    data_service = DataService(file="static\\data\\" + file_name)
+    data_service = DataService(file="static/data/" + file_name)
     data_select = data_service.get_item(index)
     problem = data_select["Body"] + data_select["Question"]
     output = model.forward_model(problem)
