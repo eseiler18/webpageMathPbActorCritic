@@ -32,7 +32,7 @@ class DataService():
         self.math_pb = clean_body + clean_question
 
     def create_label(self):
-        file_name = self.file.split("\\")[-1]
+        file_name = self.file.split("/")[-1]
         self.data["label"] = self.data.index.astype('str') + ";" + file_name
 
     def get_item(self, index):
@@ -40,4 +40,4 @@ class DataService():
 
 
 if __name__ == '__main__':
-    DataService(file=r"static\data\dev.csv")
+    DataService(file=r"static/data/dev.csv")
