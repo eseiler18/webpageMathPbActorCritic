@@ -80,7 +80,8 @@ def data_selection2():
 
 if __name__ == '__main__':
     hostname = socket.gethostname()
-    ## getting the IP address using socket.gethostbyname() method
+    # getting the IP address using socket.gethostbyname() method
     ip_address = socket.gethostbyname(hostname)
 
-    app.run(port=8080, host=ip_address, debug=True)
+    app.run(port=8080, host="10.90.39.19", debug=True)
+    #app.run(port=8080, host=ip_address, debug=True)
