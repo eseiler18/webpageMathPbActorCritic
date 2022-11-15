@@ -8,13 +8,13 @@ $("#action_select_data").on('click', function(e) {
             console.log(response);
             // disp answer of the model
             var div_response_model = $("#response_model");
-            div_response_model.html("reponse : " + response.data["output"]);
+            div_response_model.html("The model generate : <strong>" + response.data["output"] + "</strong>");
             // ask for true or false aswer
             var answer_ask = $("#ask_answer");
-            var ask = "Is the answer correct ? <br> ";
+            var ask = "Is the answer correct ? &ensp;&ensp;&ensp;&ensp; ";
             // correct
             ask += "<input type='radio' class='btn-check' name='options-outlined' id='success-outlined' autocomplete='off' value='good' >";
-            ask += "<label class='btn btn-outline-success' for='success-outlined'>Correct</label>  &ensp;";
+            ask += "<label class='btn btn-outline-success' for='success-outlined'>Correct</label>  &ensp;&ensp;&ensp;&ensp;";
             // wrong
             ask += "<input type='radio' class='btn-check' name='options-outlined' id='danger-outlined' autocomplete='off' value='wrong' >"
             ask += "<label class='btn btn-outline-danger' for='danger-outlined'>Wrong</label>"
