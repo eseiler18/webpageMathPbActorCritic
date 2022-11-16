@@ -1,4 +1,5 @@
 from flask import Flask
+import random
 import socket
 from flask import render_template
 from flask import request, redirect, url_for, jsonify
@@ -51,12 +52,14 @@ def data_selection2():
     label = []
     if request.json["active_train"]:
         data_service = DataService(file=r"static/data/train.csv")
-        math_pb = math_pb + data_service.math_pb.tolist()[0:10]
-        label = label + data_service.data["label"].values.tolist()[0:10]
+        ind_train = random.sample([*range(data_service.n)], 10)
+        math_pb = math_pb + data_service.math_pb[ind_train].tolist()
+        label = label + data_service.label[ind_train].tolist()
     if request.json["active_test"]:
         data_service = DataService(file=r"static/data/dev.csv")
-        math_pb = math_pb + data_service.math_pb.tolist()[0:10]
-        label = label + data_service.data["label"].values.tolist()[0:10]
+        ind_test = random.sample([*range(data_service.n)], 10)
+        math_pb = math_pb + data_service.math_pb[ind_test].tolist()
+        label = label + data_service.label[ind_test].tolist()
     return jsonify({"math_pb": math_pb, "label": label})
 
 
@@ -68,5 +71,5 @@ if __name__ == '__main__':
     # getting the IP address using socket.gethostbyname() method
     ip_address = socket.gethostbyname(hostname)
 
-    app.run(port=8080, host="10.90.39.19", debug=True)
-    #app.run(port=8080, host=ip_address, debug=True)
+    # app.run(port=8080, host="10.90.39.19", debug=True)
+    app.run(port=8080, host=ip_address, debug=True)
