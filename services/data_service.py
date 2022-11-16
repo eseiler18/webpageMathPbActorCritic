@@ -34,6 +34,7 @@ class DataService():
     def create_label(self):
         file_name = self.file.split("/")[-1]
         self.data["label"] = self.data.index.astype('str') + ";" + file_name
+        self.label = self.data["label"].values
 
     def get_item(self, index):
         return self.data.iloc[index].to_dict()

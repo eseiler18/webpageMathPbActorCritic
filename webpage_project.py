@@ -1,4 +1,5 @@
 from flask import Flask
+import random
 import socket
 from flask import render_template
 from flask import request, redirect, url_for, jsonify
@@ -46,12 +47,14 @@ def data_selection2():
     label = []
     if request.json["active_train"]:
         data_service = DataService(file=r"static/data/train.csv")
-        math_pb = math_pb + data_service.math_pb.tolist()[0:10]
-        label = label + data_service.data["label"].values.tolist()[0:10]
+        ind_train = random.sample([*range(data_service.n)], 10)
+        math_pb = math_pb + data_service.math_pb[ind_train].tolist()
+        label = label + data_service.label[ind_train].tolist()
     if request.json["active_test"]:
         data_service = DataService(file=r"static/data/dev.csv")
-        math_pb = math_pb + data_service.math_pb.tolist()[0:10]
-        label = label + data_service.data["label"].values.tolist()[0:10]
+        ind_test = random.sample([*range(data_service.n)], 10)
+        math_pb = math_pb + data_service.math_pb[ind_test].tolist()
+        label = label + data_service.label[ind_test].tolist()
     return jsonify({"math_pb": math_pb, "label": label})
 
 
