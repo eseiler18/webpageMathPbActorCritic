@@ -28,8 +28,6 @@ def main_display():
 @app.route('/main2')
 def data_selection():
     # load the model as global variable
-    global model
-    model = ModelService(r"static/model/output_reasoning_iteration")
     return render_template('main2.html')
 
 
@@ -63,6 +61,9 @@ def data_selection2():
 
 
 if __name__ == '__main__':
+    print("Loading model...")
+    global model
+    model = ModelService(r"static/model/output_reasoning_iteration")
     hostname = socket.gethostname()
     # getting the IP address using socket.gethostbyname() method
     ip_address = socket.gethostbyname(hostname)
