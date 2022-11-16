@@ -10,8 +10,8 @@ class ModelService():
         self.output = []
 
     def forward_model(self, problem):
-        print(problem)
-        output = self.model.generate(problem, max_length=50)
+        input_ids = self.tokenizer(problem)
+        output = self.model.generate(input_ids, max_length=50)
         output = self.tokenizer.decode(output[0], skip_special_tokens=True)
         self.output.append([problem, output])
         return output
