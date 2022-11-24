@@ -19,13 +19,6 @@ $("#action_select_data").on('click', function(e) {
             ask += "<input type='radio' class='btn-check' name='options-outlined' id='danger-outlined' autocomplete='off' value='wrong' >"
             ask += "<label class='btn btn-outline-danger' for='danger-outlined'>Wrong</label>"
             answer_ask.html(ask);
-            
-            //remove other section
-            content = ""
-            $("#answer_validity").html(content)
-            $("critic").html(content)
-            $("active_critic").html(content)
-            $("critic_response").html(content)
           })
           .catch(function (error) {
             console.log(error);
