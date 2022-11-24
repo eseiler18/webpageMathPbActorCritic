@@ -105,7 +105,7 @@ function generate_critic(){
   critic.html(content);
 }
 
-$('#critic_type').change(function(e){
+$('#critic_type_form').change(function(e){
   e.preventDefault();
   generate_critic()
 });
