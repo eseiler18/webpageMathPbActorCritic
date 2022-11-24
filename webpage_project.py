@@ -58,6 +58,11 @@ def data_selection2():
     return jsonify({"math_pb": math_pb, "label": label})
 
 
+@app.route('/callcritic', methods=['POST'])
+def callcritic():
+    return jsonify({"critic_response": "Je suis la reponse du critic"})
+
+
 if __name__ == '__main__':
     hostname = socket.gethostname()
     # getting the IP address using socket.gethostbyname() method
