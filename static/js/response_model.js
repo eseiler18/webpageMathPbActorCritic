@@ -91,7 +91,7 @@ function generate_critic(){
   if (selected_value == "manual") {
       content += "<form id='hint'>";
       content += "<label for='hint_input' class='form-label'> Give an hint do the model</label>";
-      content += "<input type='email' class='form-control' id='hint_input' placeholder='Follow hint template'></form>";
+      content += "<input type='email' class='form-control' id='hint_input' placeholder='Follow hint template' autocomplete='off'></form>";
   } 
   else if(selected_value == "automatic"){
       axios.post('/callcritic', {"selected_value": selected_value}).then(function (response) {
