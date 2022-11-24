@@ -42,8 +42,8 @@ def model_perform2():
     data_service = DataService(file="static/data/" + file_name)
     data_select = data_service.get_item(index)
     problem = data_select["Body"] + data_select["Question"]
-    output = model.forward_model(problem)
-    return jsonify({"output": output})
+    first_turn_answer = model.forward_actor_model(input_str=problem, turn=1)
+    return jsonify({"output": first_turn_answer})
 
 
 @app.route('/getdataset', methods=['POST'])
@@ -65,7 +65,8 @@ def data_selection2():
 
 @app.route('/callcritic', methods=['POST'])
 def callcritic():
-    return jsonify({"critic_response": "Je suis la reponse du critic"})
+    hint = model.forward_critic_model()
+    return jsonify({"output": hint})
 
 
 @app.route('/performcritic', methods=['POST'])
@@ -74,18 +75,18 @@ def performcritic():
     if critic_mode == "manual":
         hint = request.json["hint_input"]
     else:
-        hint = "generate hint by the critic"
-    output = "problem " + "answer " + hint
-    return jsonify({"output": output})
+        hint = model.history[-1][2]
+    second_turn_model = model.forward_actor_model(input_str=hint, turn=2)
+    return jsonify({"output": second_turn_model})
 
 
 if __name__ == '__main__':
-    print("Loading model...")
-    global model
-    model = ModelService(r"static/model/output_reasoning_iteration")
+    print("Loading actor and critic model...")
+    model = ModelService(r"static/model/output_reasoning_iteration", r"static/model/critic")
+    print("Model load well")
     hostname = socket.gethostname()
     # getting the IP address using socket.gethostbyname() method
     ip_address = socket.gethostbyname(hostname)
 
     app.run(port=8080, host="10.90.39.19", debug=True)
-    #app.run(port=8080, host=ip_address, debug=True)
+    # app.run(port=8080, host=ip_address, debug=True)

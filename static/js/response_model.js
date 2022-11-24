@@ -95,7 +95,7 @@ function generate_critic(){
   } 
   else if(selected_value == "automatic"){
       axios.post('/callcritic', {"selected_value": selected_value}).then(function (response) {
-        content += "The critic model generate the hint : <strong> " + response.data["critic_response"] + "</strong> </br>";
+        content += "The critic model generate the hint : <strong> " + response.data["output"] + "</strong> </br>";
         critic.html(content);
       })
     .catch(function (error) {
