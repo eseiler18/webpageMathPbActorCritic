@@ -63,6 +63,22 @@ def data_selection2():
     return jsonify({"math_pb": math_pb, "label": label})
 
 
+@app.route('/callcritic', methods=['POST'])
+def callcritic():
+    return jsonify({"critic_response": "Je suis la reponse du critic"})
+
+
+@app.route('/performcritic', methods=['POST'])
+def performcritic():
+    critic_mode = request.json["critic_mode"]
+    if critic_mode == "manual":
+        hint = request.json["hint_input"]
+    else:
+        hint = "generate hint by the critic"
+    output = "problem " + "answer " + hint
+    return jsonify({"output": output})
+
+
 if __name__ == '__main__':
     print("Loading model...")
     global model

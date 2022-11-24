@@ -26,9 +26,9 @@ class DataService():
             if not isinstance(clean_question[i], str):
                 clean_question[i] = ""
             clean_question[i] = clean_question[i].capitalize()
-            for j, number in enumerate(numbers[i]):
-                clean_body[i] = clean_body[i].replace("number" + str(j), number)
-                clean_question[i] = clean_question[i].replace("number" + str(j), number)
+            # for j, number in enumerate(numbers[i]):
+            #     clean_body[i] = clean_body[i].replace("number" + str(j), number)
+            #     clean_question[i] = clean_question[i].replace("number" + str(j), number)
         clean_body = np.array([self.clean_sentence(i) for i in clean_body])
         clean_question = np.array([self.clean_sentence(i, True) for i in clean_question])
         self.math_pb = []

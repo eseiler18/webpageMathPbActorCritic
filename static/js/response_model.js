@@ -62,15 +62,76 @@ function reload_model_selection(){
     var answer_validity = $("#answer_validity");
     var content = ""
     if (selected_value == "good") {
-        content = "<h3 class='mb-3'>Nice the anwser is good</h3>";
+        content = "<strong> Nice the anwser is correct </strong>";
     } else if(selected_value == "wrong"){
-        content += " <label for='hintform' class='form-label'> Wrong answer </label>"
-        content += " <input class='form-control' id='hintform' placeholder='Type an hint for the model'>"
+        content += "<strong> Do you want to be the critic or rely on the automatic critic ? </strong> &ensp;&ensp;&ensp;&ensp; ";
+        // content += "<form id='critic_type'>"
+        content += "<div class='form-check form-check-inline'>";
+        content += "<input class='form-check-input' type='radio' name='critic_type' id='manual_critic' value='manual'>";
+        content += "<label class='form-check-label' for='critic_type'> Manual critic </label></div>";
+        content += "<div class='form-check form-check-inline'>";
+        content += "<input class='form-check-input' type='radio' name='critic_type' id='automatic_critic' value='automatic'>";
+        content += "<label class='form-check-label' for='critic_type'> Automatic critic </label></div>";
     }
     answer_validity.html(content);
 }
 
+
 $('#ask_answer').change(function(e){
-    e.preventDefault();
-    reload_answer_validity()
+  e.preventDefault();
+  reload_answer_validity()
+});
+
+function generate_critic(){
+  var selected_value = $("input[name='critic_type']:checked").val();
+  var critic = $("#critic");
+  var active_critic = $("#active_critic");
+  var content = "";
+  active_critic.html("<button class='btn btn-primary' id='action_resolve'>Resolve</button>")
+  if (selected_value == "manual") {
+      content += "<form id='hint'>";
+      content += "<label for='hint_input' class='form-label'> Give an hint do the model</label>";
+      content += "<input type='email' class='form-control' id='hint_input' placeholder='Follow hint template'></form>";
+  } 
+  else if(selected_value == "automatic"){
+      axios.post('/callcritic', {"selected_value": selected_value}).then(function (response) {
+        content += "The critic model generate the hint : <strong> " + response.data["critic_response"] + "</strong> </br>";
+        critic.html(content);
+      })
+    .catch(function (error) {
+      console.log(error);
+    });
+  }
+  critic.html(content);
+}
+
+$('#answer_validity').change(function(e){
+  e.preventDefault();
+  generate_critic()
+});
+
+$("#active_critic").on('click', function(e) {
+  e.preventDefault();
+  // recup la critic mode
+  var critic_mode = $("input[name='critic_type']:checked").val();
+  var div_response_model = $("#critic_response");
+  var content=""
+  if (critic_mode == "manual") {
+    content += "manual "
+    var hint_input = $("#hint_input").val();
+    content += hint_input
+  }
+  else{
+    content += "automatic"
+    var hint_input = "nan"
+  }
+  //div_response_model.html(content)
+  axios.post('/performcritic', {"critic_mode": critic_mode, "hint_input": hint_input}).then(function (response) {
+             // disp response of the model
+          var critic_response = $("#critic_response");
+          critic_response.html("The model with help of the critic generate : <strong>" + response.data["output"] + "</strong>");
+  })
+  .catch(function (error) {
+  console.log(error);
   });
+});
