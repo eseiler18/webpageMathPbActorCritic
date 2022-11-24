@@ -85,17 +85,17 @@ $('#ask_answer').change(function(e){
 function generate_critic(){
   var selected_value = $("input[name='critic_type']:checked").val();
   var critic = $("#critic");
+  var active_critic = $("#active_critic");
   var content = "";
+  active_critic.html("<button class='btn btn-primary' id='action_resolve'>Resolve</button>")
   if (selected_value == "manual") {
       content += "<form id='hint'>";
       content += "<label for='hint_input' class='form-label'> Give an hint do the model</label>";
       content += "<input type='email' class='form-control' id='hint_input' placeholder='Follow hint template'></form>";
-      content += "<button class='btn btn-primary' id='action_resolve'>Resolve</button>";
   } 
   else if(selected_value == "automatic"){
       axios.post('/callcritic', {"selected_value": selected_value}).then(function (response) {
         content += "The critic model generate the hint : <strong> " + response.data["critic_response"] + "</strong> </br>";
-        content += "<button class='btn btn-primary' id='action_resolve'>Resolve</button>";
         critic.html(content);
       })
     .catch(function (error) {
@@ -110,39 +110,28 @@ $('#answer_validity').change(function(e){
   generate_critic()
 });
 
-$("#action_resolve").on('click', function(e) {
+$("#active_critic").on('click', function(e) {
   e.preventDefault();
   // recup la critic mode
   var critic_mode = $("input[name='critic_type']:checked").val();
-  var div_response_model = $("#response_model");
-  content=""
+  var div_response_model = $("#critic_response");
+  var content=""
   if (critic_mode == "manual") {
-    content += "manual"
+    content += "manual "
+    var hint_input = $("#hint_input").val();
+    content += hint_input
   }
   else{
     content += "automatic"
+    var hint_input = "nan"
   }
-  div_response_model.html(content)
-  // if (select_data != -1){
-  //     axios.post('/main2', {"select_data": select_data})
-  //       .then(function (response) {
-  //         console.log(response);
-  //         // disp answer of the model
-  //         var div_response_model = $("#response_model");
-  //         div_response_model.html("The model generate : <strong>" + response.data["output"] + "</strong>");
-  //         // ask for true or false aswer
-  //         var answer_ask = $("#ask_answer");
-  //         var ask = "Is the answer correct ? &ensp;&ensp;&ensp;&ensp; ";
-  //         // correct
-  //         ask += "<input type='radio' class='btn-check' name='options-outlined' id='success-outlined' autocomplete='off' value='good' >";
-  //         ask += "<label class='btn btn-outline-success' for='success-outlined'>Correct</label>  &ensp;&ensp;&ensp;&ensp;";
-  //         // wrong
-  //         ask += "<input type='radio' class='btn-check' name='options-outlined' id='danger-outlined' autocomplete='off' value='wrong' >"
-  //         ask += "<label class='btn btn-outline-danger' for='danger-outlined'>Wrong</label>"
-  //         answer_ask.html(ask);
-  //       })
-  //       .catch(function (error) {
-  //         console.log(error);
-  //       });
-  // }
+  //div_response_model.html(content)
+  axios.post('/performcritic', {"critic_mode": critic_mode, "hint_input": hint_input}).then(function (response) {
+             // disp response of the model
+          var critic_response = $("#critic_response");
+          critic_response.html("The model with help of the critic generate : <strong>" + response.data["output"] + "</strong>");
+  })
+  .catch(function (error) {
+  console.log(error);
+  });
 });
