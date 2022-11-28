@@ -1,11 +1,18 @@
 from flask import Flask
 import random
 import socket
+import argparse
 from flask import render_template
 from flask import request, redirect, url_for, jsonify
 
 from services.model_service import ModelService
 from services.data_service import DataService
+
+parser = argparse.ArgumentParser(description='disruption prediction JET')
+# data specific
+parser.add_argument('--random-data', default=False, type=bool,
+                    help='true is data selection random')
+
 
 app = Flask(__name__)
 
@@ -53,12 +60,20 @@ def data_selection2():
     label = []
     if request.json["active_train"]:
         data_service = DataService(file=r"static/data/train.csv")
-        ind_train = random.sample([*range(data_service.n)], 10)
+        if args.random_data:
+            ind_train = random.sample([*range(data_service.n)], 10)
+        else:
+            ind_train = [0, 202, 563, 695, 1033, 1275, 1399, 2555, 2800, 3365]
         math_pb = math_pb + data_service.math_pb[ind_train].tolist()
         label = label + data_service.label[ind_train].tolist()
     if request.json["active_test"]:
         data_service = DataService(file=r"static/data/dev.csv")
-        ind_test = random.sample([*range(data_service.n)], 10)
+        if args.random_data:
+            ind_test = random.sample([*range(data_service.n)], 10)
+        else:
+            ind_test = [0, 20, 50, 66, 105, 233, 349, 555, 684, 865]
+        if args.random_data:
+            ind_test = random.sample([*range(data_service.n)], 10)
         math_pb = math_pb + data_service.math_pb[ind_test].tolist()
         label = label + data_service.label[ind_test].tolist()
     return jsonify({"math_pb": math_pb, "label": label})
@@ -83,7 +98,7 @@ def performcritic():
 
 
 if __name__ == '__main__':
-    random.seed(0)
+    args = parser.parse_args()
     print("Loading actor and critic model...")
     model = ModelService(r"static/model/output_reasoning_iteration", r"static/model/critic")
     print("Model load well")
