@@ -43,6 +43,7 @@ def model_perform2():
     data_select = data_service.get_item(index)
     problem = data_select["Body"] + data_select["Question"]
     first_turn_answer = model.forward_actor_model(input_str=problem, turn=1)
+    first_turn_answer = first_turn_answer.split("|")[:-1] # split and remove the last EOS
     return jsonify({"output": first_turn_answer})
 
 
