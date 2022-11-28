@@ -83,6 +83,7 @@ def performcritic():
 
 
 if __name__ == '__main__':
+    random.seed(0)
     print("Loading actor and critic model...")
     model = ModelService(r"static/model/output_reasoning_iteration", r"static/model/critic")
     print("Model load well")
