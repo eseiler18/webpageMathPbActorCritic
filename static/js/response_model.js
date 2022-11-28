@@ -8,7 +8,10 @@ $("#action_select_data").on('click', function(e) {
             console.log(response);
             // disp answer of the model
             var div_response_model = $("#response_model");
-            div_response_model.html("The model generate : <strong>" + response.data["output"] + "</strong>");
+            var content = "The model generate :"
+            for (let [i, opt] of Object.entries(response.data["output"])){
+              content+= "<strong>" + opt + "</strong> <br>"
+            div_response_model.html(content);
             // ask for true or false aswer
             var answer_ask = $("#ask_answer");
             var ask = "Is the answer correct ? &ensp;&ensp;&ensp;&ensp; ";
@@ -133,7 +136,7 @@ $("#active_critic").on('click', function(e) {
   }
   //div_response_model.html(content)
   axios.post('/performcritic', {"critic_mode": critic_mode, "hint_input": hint_input}).then(function (response) {
-             // disp response of the model
+          // disp response of the model
           var critic_response = $("#critic_response");
           critic_response.html("The model with help of the critic generate : <strong>" + response.data["output"] + "</strong>");
   })
