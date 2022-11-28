@@ -10,7 +10,12 @@ $("#action_select_data").on('click', function(e) {
             var div_response_model = $("#response_model");
             var content = "The model generate : "
             for (let [i, opt] of Object.entries(response.data["output"])){
-              content+= "&emsp;&emsp;&emsp;&emsp;&emsp;&nbsp;<strong>" + opt + "</strong> <br>"
+              if (i>0){
+                content += "&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&nbsp; <strong>" + opt + "</strong> <br>"
+              }
+              else{
+                content += "<strong>" + opt + "</strong> <br>"
+              }
             }
             div_response_model.html(content);
             // ask for true or false aswer
@@ -136,7 +141,12 @@ $("#active_critic").on('click', function(e) {
           var critic_response = $("#critic_response");
           var content = "The model with help of the critic generate : "
           for (let [i, opt] of Object.entries(response.data["output"])){
-            content += "&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&nbsp;<strong>" + opt + "</strong> <br>"
+            if (i>0){
+              content += "&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&nbsp; <strong>" + opt + "</strong> <br>"
+            }
+            else{
+              content += "<strong>" + opt + "</strong> <br>"
+            }
           }
           critic_response.html(content);
   })
