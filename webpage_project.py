@@ -63,7 +63,7 @@ def data_selection2():
         if args.random_data:
             ind_train = random.sample([*range(data_service.n)], 10)
         else:
-            ind_train = [0, 202, 563, 695, 1033, 1275, 1399, 2555, 2800, 3365]
+            ind_train = [0, 202, 563, 695, 1033, 1275, 1399, 2555, 2800, 3122]
         math_pb = math_pb + data_service.math_pb[ind_train].tolist()
         label = label + data_service.label[ind_train].tolist()
     if request.json["active_test"]:
