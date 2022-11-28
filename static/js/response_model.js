@@ -11,7 +11,7 @@ $("#action_select_data").on('click', function(e) {
             var content = "The model generate : "
             for (let [i, opt] of Object.entries(response.data["output"])){
               if (i>0){
-                content += "&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&nbsp; <strong>" + opt + "</strong> <br>"
+                content += "&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&nbsp;&nbsp;&nbsp <strong>" + opt + "</strong> <br>"
               }
               else{
                 content += "<strong>" + opt + "</strong> <br>"
@@ -142,7 +142,7 @@ $("#active_critic").on('click', function(e) {
           var content = "The model with help of the critic generate : "
           for (let [i, opt] of Object.entries(response.data["output"])){
             if (i>0){
-              content += "&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&nbsp; <strong>" + opt + "</strong> <br>"
+              content += "&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&nbsp;&nbsp; <strong>" + opt + "</strong> <br>"
             }
             else{
               content += "<strong>" + opt + "</strong> <br>"
