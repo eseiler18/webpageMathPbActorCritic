@@ -11,6 +11,7 @@ $("#action_select_data").on('click', function(e) {
             var content = "The model generate :"
             for (let [i, opt] of Object.entries(response.data["output"])){
               content+= "<strong>" + opt + "</strong> <br>"
+            }
             div_response_model.html(content);
             // ask for true or false aswer
             var answer_ask = $("#ask_answer");
@@ -123,12 +124,9 @@ $("#active_critic").on('click', function(e) {
   e.preventDefault();
   // recup la critic mode
   var critic_mode = $("input[name='critic_type']:checked").val();
-  var div_response_model = $("#critic_response");
-  var content=""
   if (critic_mode == "manual") {
     content += "manual "
     var hint_input = $("#hint_input").val();
-    content += hint_input
   }
   else{
     content += "automatic"
