@@ -77,8 +77,9 @@ def performcritic():
         hint = request.json["hint_input"]
     else:
         hint = model.history[-1][2]
-    second_turn_model = model.forward_actor_model(input_str=hint, turn=2)
-    return jsonify({"output": second_turn_model})
+    second_turn_answer = model.forward_actor_model(input_str=hint, turn=2)
+    second_turn_answer = second_turn_answer.split("|")[:-1] # split and remove the last EOS
+    return jsonify({"output": second_turn_answer})
 
 
 if __name__ == '__main__':

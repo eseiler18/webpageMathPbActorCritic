@@ -8,9 +8,9 @@ $("#action_select_data").on('click', function(e) {
             console.log(response);
             // disp answer of the model
             var div_response_model = $("#response_model");
-            var content = "The model generate :"
+            var content = "The model generate : "
             for (let [i, opt] of Object.entries(response.data["output"])){
-              content+= "<strong>" + opt + "</strong> <br>"
+              content+= "&emsp;&emsp;&emsp;&emsp;&emsp;&nbsp;<strong>" + opt + "</strong> <br>"
             }
             div_response_model.html(content);
             // ask for true or false aswer
@@ -125,18 +125,20 @@ $("#active_critic").on('click', function(e) {
   // recup la critic mode
   var critic_mode = $("input[name='critic_type']:checked").val();
   if (critic_mode == "manual") {
-    content += "manual "
     var hint_input = $("#hint_input").val();
   }
   else{
-    content += "automatic"
     var hint_input = "nan"
   }
   //div_response_model.html(content)
   axios.post('/performcritic', {"critic_mode": critic_mode, "hint_input": hint_input}).then(function (response) {
           // disp response of the model
           var critic_response = $("#critic_response");
-          critic_response.html("The model with help of the critic generate : <strong>" + response.data["output"] + "</strong>");
+          var content = "The model with help of the critic generate : "
+          for (let [i, opt] of Object.entries(response.data["output"])){
+            content += "&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&nbsp;<strong>" + opt + "</strong> <br>"
+          }
+          critic_response.html(content);
   })
   .catch(function (error) {
   console.log(error);
