@@ -70,6 +70,18 @@ function reload_model_selection(){
     reload_model_selection();
   });
 
+  $("#select_data").on('change', function(e){
+    display_data = $("#display_data");
+    var select_data = $("#select_data").val();
+    if (select_data != -1){
+      axios.post('/display_data', {"display_data": select_data})
+        .then(function (response) {
+          console.log(response);
+          var content = " <strong> " + response.data["label"] + "</strong>"
+          display_data.html(content)
+        })
+      }
+  });
 
 // answer button
   function reload_answer_validity(){

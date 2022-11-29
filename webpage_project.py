@@ -97,6 +97,17 @@ def performcritic():
     return jsonify({"output": second_turn_answer})
 
 
+@app.route('/display_data', methods=['POST'])
+def display_data():
+    data_select = request.json["display_data"]
+    data_select = data_select.split(";")
+    index = int(data_select[0])
+    file_name = data_select[1]
+    data_service = DataService(file=r"static/data/" + file_name)
+    data_select = data_service.get_math_pb(index)
+    return jsonify({"label": data_select})
+
+
 if __name__ == '__main__':
     args = parser.parse_args()
     print("Loading actor and critic model...")
