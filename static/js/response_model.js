@@ -101,7 +101,7 @@ function reload_model_selection(){
         content += "<label class='form-check-label' for='critic_type'> Automatic critic </label></div>";
         content += "<div class='form-check form-check-inline'>";
         content += "<input class='form-check-input' type='radio' name='critic_type' id='oracle_critic' value='oracle'>";
-        content += "<label class='form-check-label' for='critic_type'> oracle critic </label></div>";
+        content += "<label class='form-check-label' for='critic_type'> Oracle critic </label></div>";
     }
     answer_validity.html(content);
 }
