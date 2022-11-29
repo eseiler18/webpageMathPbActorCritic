@@ -74,10 +74,20 @@ def performcritic():
     return jsonify({"output": output})
 
 
+@app.route('/display_data', methods=['POST'])
+def display_data():
+    data_select = request.json["display_data"]
+    data_select = data_select.split(";")
+    index = int(data_select[0])
+    file_name = data_select[1]
+    data_service = DataService(file=r"static/data/" + file_name)
+    data_select = data_service.get_math_pb(index)
+    return jsonify({"label": data_select})
+
+
 if __name__ == '__main__':
     hostname = socket.gethostname()
     # getting the IP address using socket.gethostbyname() method
     ip_address = socket.gethostbyname(hostname)
-
     # app.run(port=8080, host="10.90.39.19", debug=True)
     app.run(port=8080, host=ip_address, debug=True)

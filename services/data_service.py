@@ -44,6 +44,9 @@ class DataService():
     def get_item(self, index):
         return self.data.iloc[index].to_dict()
 
+    def get_math_pb(self, index):
+        return self.math_pb[index]
+
     @staticmethod
     def clean_sentence(sentence, question=False):
         # capitalize first letter

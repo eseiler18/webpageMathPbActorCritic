@@ -8,7 +8,16 @@ $("#action_select_data").on('click', function(e) {
             console.log(response);
             // disp answer of the model
             var div_response_model = $("#response_model");
-            div_response_model.html("The model generate : <strong>" + response.data["output"] + "</strong>");
+            var content = "The model generate : "
+            for (let [i, opt] of Object.entries(response.data["output"])){
+              if (i>0){
+                content += "&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&nbsp;&nbsp;&nbsp; <strong>" + opt + "</strong> <br>"
+              }
+              else{
+                content += "<strong>" + opt + "</strong> <br>"
+              }
+            }
+            div_response_model.html(content);
             // ask for true or false aswer
             var answer_ask = $("#ask_answer");
             var ask = "Is the answer correct ? &ensp;&ensp;&ensp;&ensp; ";
@@ -19,6 +28,12 @@ $("#action_select_data").on('click', function(e) {
             ask += "<input type='radio' class='btn-check' name='options-outlined' id='danger-outlined' autocomplete='off' value='wrong' >"
             ask += "<label class='btn btn-outline-danger' for='danger-outlined'>Wrong</label>"
             answer_ask.html(ask);
+
+            // remove section
+            $("#answer_validity").html("")
+            $("#critic").html("")
+            $("#active_critic").html("")
+            $("#critic_response").html("")
           })
           .catch(function (error) {
             console.log(error);
@@ -35,7 +50,7 @@ function reload_model_selection(){
             var options =  "<option value='-1' hidden>Choose a Math problem</option>" ;
             // for (opt of response.data["math_pb"]){
             for (let [i, opt] of Object.entries(response.data["math_pb"])){
-              options += "<option value='" + response.data["label"][i] + "'>" +  opt + "</option>";
+              options += "<option name='opt' value='" + response.data["label"][i] + "'>" +  opt +"</option>";
             }
             select_data.html(options);
           })
@@ -53,6 +68,19 @@ function reload_model_selection(){
   $("#active_test").on('change', function(e) {
     e.preventDefault();
     reload_model_selection();
+  });
+
+  $("#select_data").on('change', function(e){
+    display_data = $("#display_data");
+    var select_data = $("#select_data").val();
+    if (select_data != -1){
+      axios.post('/display_data', {"display_data": select_data})
+        .then(function (response) {
+          console.log(response);
+          var content = " <strong> " + response.data["label"] + "</strong>"
+          display_data.html(content)
+        })
+      }
   });
 
 
@@ -91,11 +119,11 @@ function generate_critic(){
   if (selected_value == "manual") {
       content += "<form id='hint'>";
       content += "<label for='hint_input' class='form-label'> Give an hint do the model</label>";
-      content += "<input type='email' class='form-control' id='hint_input' placeholder='Follow hint template'></form>";
+      content += "<input class='form-control' id='hint_input' placeholder='Follow hint template' autocomplete='off'></form>";
   } 
   else if(selected_value == "automatic"){
       axios.post('/callcritic', {"selected_value": selected_value}).then(function (response) {
-        content += "The critic model generate the hint : <strong> " + response.data["critic_response"] + "</strong> </br>";
+        content += "The critic model generate the hint : <strong> " + response.data["output"] + "</strong> </br>";
         critic.html(content);
       })
     .catch(function (error) {
@@ -114,22 +142,26 @@ $("#active_critic").on('click', function(e) {
   e.preventDefault();
   // recup la critic mode
   var critic_mode = $("input[name='critic_type']:checked").val();
-  var div_response_model = $("#critic_response");
-  var content=""
   if (critic_mode == "manual") {
-    content += "manual "
     var hint_input = $("#hint_input").val();
-    content += hint_input
   }
   else{
-    content += "automatic"
     var hint_input = "nan"
   }
   //div_response_model.html(content)
   axios.post('/performcritic', {"critic_mode": critic_mode, "hint_input": hint_input}).then(function (response) {
-             // disp response of the model
+          // disp response of the model
           var critic_response = $("#critic_response");
-          critic_response.html("The model with help of the critic generate : <strong>" + response.data["output"] + "</strong>");
+          var content = "The model with help of the critic generate : "
+          for (let [i, opt] of Object.entries(response.data["output"])){
+            if (i>0){
+              content += "&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp; <strong>" + opt + "</strong> <br>"
+            }
+            else{
+              content += "<strong>" + opt + "</strong> <br>"
+            }
+          }
+          critic_response.html(content);
   })
   .catch(function (error) {
   console.log(error);
