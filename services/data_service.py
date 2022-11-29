@@ -83,7 +83,7 @@ class DataService():
                 if s[-1] == " ":
                     s = s[:-1]
                 new_sentence = new_sentence + "," + s
-        if question:
+        if question:    
             if new_sentence != "":
                 if new_sentence[-1] != "?":
                     new_sentence = new_sentence[:-1] + "?"
@@ -142,10 +142,8 @@ class DataService():
                         linear_equation = linear_equation + '#'+str(i) + ": " + operation_dict[operations[i]] + ' ( ' + '#'+str(i-1) + ', ' + list_equation[start_index+i+1] + ' )' + ' | '
 
             else:
-                print("2" + equation)
                 linear_equation = "NAN"
         else:
-            print("1" + equation)
             linear_equation = "NAN"
 
         return linear_equation
@@ -181,5 +179,56 @@ class DataService():
         return operation_index, value_index, constant_index
 
 
+def oracle_hint(linear_equation_gen, linear_equation_true):
+    if linear_equation_gen == linear_equation_true:
+        return "No"
+    hint = ""
+    nb_operation_gen = len(linear_equation_gen.split('|'))
+    nb_operation_true = len(linear_equation_true.split('|'))
+    n = nb_operation_true
+    if nb_operation_gen > nb_operation_true:
+        hint += "Remove an operation. "
+        n = nb_operation_true
+    if nb_operation_gen < nb_operation_true:
+        hint += "Add an operation. "
+        n = nb_operation_gen
+    for i in range(n):
+        operation_true = linear_equation_true.split('|')[i].split(" ")
+        operation_gen = linear_equation_gen.split('|')[i].split(" ")
+        while "" in operation_true:
+            operation_true.remove("")
+        while "" in operation_gen:
+            operation_gen.remove("")
+        if operation_true != operation_gen:
+            # check operator
+            operator_true = operation_true[1]
+            operator_gen = operation_gen[1]
+            if operator_gen != operator_true:
+                hint += "The operator in the position " + str(i*7+1) + " is incorrect. "
+            # check number
+            num0_true = operation_true[3][:-1]
+            num1_true = operation_true[4]
+            num0_gen = operation_gen[3][:-1]
+            num1_gen = operation_gen[4]
+            if operator_true in ["add", "multiply"]:
+                # verify swap number for swapable operation
+                if (num0_gen != num1_true) | (num0_gen != num1_true):
+                    if num0_true != num0_gen:
+                        hint += "The number in the position " + str(i*7+3) + " is incorrect. "
+                    if num1_true != num1_gen:
+                        hint += "The number in the position " + str(i*7+4) + " is incorrect. "
+            else:
+                if num0_true != num0_gen:
+                    hint += "The number in the position " + str(i*7+3) + " is incorrect. "
+                if num1_true != num1_gen:
+                    hint += "The number in the position " + str(i*7+4) + " is incorrect. "
+    if hint == "":
+        hint = "No"
+    return hint
+
+
 if __name__ == '__main__':
     DataService(file=r"static/data/train.csv")
+    linear_equation_gen = "#0: multiply ( number2, number1 ) | #1: divide ( number2, #0 ) | #1: divide ( 2, number2 )"
+    linear_equation_true = "#0: add ( number0, number1 ) | #1: add ( #0, number2 ) | #1: multiply ( number2, #0 )"
+    print(oracle_hint(linear_equation_gen, linear_equation_true))
