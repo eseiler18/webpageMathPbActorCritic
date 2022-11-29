@@ -134,7 +134,7 @@ function generate_critic(){
   }
   else if(selected_value == "oracle"){
     axios.post('/callcritic', {"critic_mode": selected_value}).then(function (response) {
-      content += "The critic model generate the hint : <strong> " + response.data["output"] + "</strong> </br>";
+      content += "The oracle hint is : <strong> " + response.data["output"] + "</strong> </br>";
       critic.html(content);
     })
   .catch(function (error) {
