@@ -47,6 +47,7 @@ def model_perform2():
     data_select = data_select.split(";")
     file_name = data_select[1]
     data_service = DataService(file="static/data/" + file_name)
+    index = int(data_select[0])
     data_select = data_service.get_item(index)
     problem = data_select["Body"] + data_select["Question"]
     first_turn_answer = model.forward_actor_model(input_str=problem, turn=1)
