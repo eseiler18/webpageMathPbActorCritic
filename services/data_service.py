@@ -19,7 +19,6 @@ class DataService():
         # drop data with incorrect linear formula
         index_names = self.data[self.data['linear_equation'] == 'NAN'].index
         self.data.drop(index_names, inplace=True)
-        print("r")
 
     def create_math_pb(self):
         clean_body = self.body.values
