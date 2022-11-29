@@ -99,6 +99,9 @@ function reload_model_selection(){
         content += "<div class='form-check form-check-inline'>";
         content += "<input class='form-check-input' type='radio' name='critic_type' id='automatic_critic' value='automatic'>";
         content += "<label class='form-check-label' for='critic_type'> Automatic critic </label></div>";
+        content += "<div class='form-check form-check-inline'>";
+        content += "<input class='form-check-input' type='radio' name='critic_type' id='oracle_critic' value='oracle'>";
+        content += "<label class='form-check-label' for='critic_type'> oracle critic </label></div>";
     }
     answer_validity.html(content);
 }
@@ -121,7 +124,7 @@ function generate_critic(){
       content += "<input class='form-control' id='hint_input' placeholder='Follow hint template' autocomplete='off'></form>";
   } 
   else if(selected_value == "automatic"){
-      axios.post('/callcritic', {"selected_value": selected_value}).then(function (response) {
+      axios.post('/callcritic', {"critic_mode": selected_value}).then(function (response) {
         content += "The critic model generate the hint : <strong> " + response.data["output"] + "</strong> </br>";
         critic.html(content);
       })
@@ -129,6 +132,15 @@ function generate_critic(){
       console.log(error);
     });
   }
+  else if(selected_value == "oracle"){
+    axios.post('/callcritic', {"critic_mode": selected_value}).then(function (response) {
+      content += "The critic model generate the hint : <strong> " + response.data["output"] + "</strong> </br>";
+      critic.html(content);
+    })
+  .catch(function (error) {
+    console.log(error);
+  });
+}
   critic.html(content);
 }
 

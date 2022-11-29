@@ -6,7 +6,7 @@ from flask import render_template
 from flask import request, redirect, url_for, jsonify
 
 from services.model_service import ModelService
-from services.data_service import DataService
+from services.data_service import DataService, oracle_hint
 
 parser = argparse.ArgumentParser(description='disruption prediction JET')
 # data specific
@@ -42,9 +42,9 @@ def data_selection():
 # with nlp model
 @app.route('/main2', methods=['POST'])
 def model_perform2():
+    global data_select
     data_select = request.json["select_data"]
     data_select = data_select.split(";")
-    index = int(data_select[0])
     file_name = data_select[1]
     data_service = DataService(file="static/data/" + file_name)
     data_select = data_service.get_item(index)
@@ -81,7 +81,13 @@ def data_selection2():
 
 @app.route('/callcritic', methods=['POST'])
 def callcritic():
-    hint = model.forward_critic_model()
+    critic_mode = request.json["critic_mode"]
+    if critic_mode == "automatic":
+        hint = model.forward_critic_model()
+    if critic_mode == "oracle":
+        generate_linear_formula = model.history[-1][1][:-6]
+        true_linear_formula = data_select["linear_equation"]
+        hint = oracle_hint(generate_linear_formula, true_linear_formula)
     return jsonify({"output": hint})
 
 
@@ -117,5 +123,5 @@ if __name__ == '__main__':
     # getting the IP address using socket.gethostbyname() method
     ip_address = socket.gethostbyname(hostname)
 
-    app.run(port=8080, host="10.90.39.19", debug=True)
-    # app.run(port=8080, host=ip_address, debug=True)
+    # app.run(port=8080, host="10.90.39.19", debug=True)
+    app.run(port=8080, host=ip_address, debug=True)

@@ -43,7 +43,7 @@ class DataService():
     def create_linear_equation(self):
         linear_equation = []
         for equation in self.data["Equation"]:
-            linear_equation.append(self.tree2linear(equation))
+            linear_equation.append(self.tree2linear(equation)[:-3])
         self.data["linear_equation"] = linear_equation
 
     def get_item(self, index):
@@ -228,7 +228,7 @@ def oracle_hint(linear_equation_gen, linear_equation_true):
 
 
 if __name__ == '__main__':
-    DataService(file=r"static/data/train.csv")
+    data = DataService(file=r"static/data/train.csv")
     linear_equation_gen = "#0: multiply ( number2, number1 ) | #1: divide ( number2, #0 ) | #1: divide ( 2, number2 )"
-    linear_equation_true = "#0: add ( number0, number1 ) | #1: add ( #0, number2 ) | #1: multiply ( number2, #0 )"
+    linear_equation_true = "#0: add ( number0, number1 ) | #1: add ( #0, number2 )"
     print(oracle_hint(linear_equation_gen, linear_equation_true))
