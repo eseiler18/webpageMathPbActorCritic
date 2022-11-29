@@ -24,6 +24,11 @@ class DataService():
     def create_math_pb(self):
         clean_body = self.body.values
         clean_question = self.question.values
+        for i in range(len(self.numbers)):
+            clean_body[i] = clean_body[i].capitalize()
+            if not isinstance(clean_question[i], str):
+                clean_question[i] = ""
+            clean_question[i] = clean_question[i].capitalize()
         clean_body = np.array([self.clean_sentence(i) for i in clean_body])
         clean_question = np.array([self.clean_sentence(i, True) for i in clean_question])
         self.math_pb = []
