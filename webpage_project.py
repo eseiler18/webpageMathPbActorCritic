@@ -89,6 +89,7 @@ def callcritic():
         generate_linear_formula = model.history[-1][1][:-6]
         true_linear_formula = data_select["linear_equation"]
         hint = oracle_hint(generate_linear_formula, true_linear_formula)
+        model.history[-1].append(hint)
     return jsonify({"output": hint})
 
 
