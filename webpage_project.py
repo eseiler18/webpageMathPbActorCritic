@@ -12,6 +12,8 @@ parser = argparse.ArgumentParser(description='disruption prediction JET')
 # data specific
 parser.add_argument('--random-data', default=False, type=bool,
                     help='true is data selection random')
+parser.add_argument('--verbose', default=False, type=bool,
+                    help='dispay input of model')
 
 
 app = Flask(__name__)
@@ -119,7 +121,7 @@ def display_data():
 if __name__ == '__main__':
     args = parser.parse_args()
     print("Loading actor and critic model...")
-    model = ModelService(r"static/model/output_reasoning_iteration", r"static/model/critic")
+    model = ModelService(r"static/model/output_reasoning_iteration", r"static/model/critic", verbose = args.verbose)
     print("Model load well")
     hostname = socket.gethostname()
     # getting the IP address using socket.gethostbyname() method

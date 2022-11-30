@@ -4,7 +4,7 @@ from transformers import T5Tokenizer, T5ForConditionalGeneration
 class ModelService():
     """Actor Critic Model
     """
-    def __init__(self, actor_model_dir, critic_model_dir=None):
+    def __init__(self, actor_model_dir, critic_model_dir=None, verbose=False):
         """Initialisation of actor critic model
 
         Args:
@@ -22,6 +22,7 @@ class ModelService():
             self.critic_model = None
         # history
         self.history = []
+        self.verbose = verbose
 
     def forward_actor_model(self, input_str, turn):
         """perform actor model forward for:
@@ -44,12 +45,15 @@ class ModelService():
             input_str = problem + answer + hint
 
         # tokenise input
+        if self.verbose:
+            print("Input actor: " + input_ids)
         input_ids = self.tokenizer(input_str, return_tensors="pt").input_ids
         # model generate output
         output = self.actor_model.generate(input_ids, max_length=50)
         # decode output
         output = self.tokenizer.decode(output[0], skip_special_tokens=True)
-
+        if self.verbose:
+            print("Output actor : " + output)
         # element of history [problem, answer, hint (optional), new answer (optional)]
         # first model turn add problem and answer
         if turn == 1:
@@ -77,11 +81,15 @@ class ModelService():
         input_str = problem + answer
 
         # tokenise input
+        if self.verbose:
+            print("Input critic: " + input_ids)
         input_ids = self.tokenizer(input_str, return_tensors="pt").input_ids
         # model generate output
         output = self.critic_model.generate(input_ids, max_length=50)
         # decode output
         output = self.tokenizer.decode(output[0], skip_special_tokens=True)
+        if self.verbose:
+            print("Ouput critic: " + output)
 
         # add hint to the history
         # element of history [problem, answer, hint (optional), new answer (optional)]
