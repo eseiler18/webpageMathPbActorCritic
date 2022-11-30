@@ -42,7 +42,7 @@ class ModelService():
             # answer
             answer = self.history[-1][1]
             hint = input_str
-            input_str = problem + answer + hint
+            input_str = problem + " " + answer + " " + hint
 
         # tokenise input
         if self.verbose:
@@ -78,7 +78,7 @@ class ModelService():
         problem = self.history[-1][0]
         # answer
         answer = self.history[-1][1]
-        input_str = problem + answer
+        input_str = problem + " " + answer
 
         # tokenise input
         if self.verbose:
