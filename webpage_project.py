@@ -14,8 +14,6 @@ parser.add_argument('--random-data', default=False, type=bool,
                     help='true is data selection random')
 parser.add_argument('--verbose', default=False, type=bool,
                     help='dispay input of model')
-    
-
 
 app = Flask(__name__)
 
@@ -23,16 +21,6 @@ app = Flask(__name__)
 @app.route('/')
 def home():
     return redirect('main2')
-
-
-@app.route('/data/data.pdf', methods=['GET'])
-def download():
-    return url_for('static', filename=r'/data/train.csv')
-
-
-@app.route('/main', methods=['GET'])
-def main_display():
-    return render_template('main.html')
 
 
 # with nlp model
@@ -51,7 +39,7 @@ def model_perform2():
     file_name = data_select[1]
     data_service = DataService(file="static/data/" + file_name)
     index = int(data_select[0])
-    data_select = data_service.get_math_pb(index)
+    data_select = data_service.get_item(index)
     problem = data_service.get_math_pb(index)
     first_turn_answer = model.forward_actor_model(input_str=problem, turn=1)
     first_turn_answer = first_turn_answer.split("|")[:-1] # split and remove the last EOS
