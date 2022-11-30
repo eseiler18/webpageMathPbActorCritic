@@ -99,7 +99,6 @@ class DataService():
         number_list = ['number0', 'number1', 'number2', 'number3', 'number4', 'number5', 'number6']
         operation_dict = {'+': 'add', '-': 'substract', '/': 'divide', '*': 'multiply'}
         operation_list = ['*', '+', '-', '/']
-        operation_list2 = ["multiply", "add", "substract", "divide"]
 
         # equation = "- number1 + number2 number3"
         # equation = "* - 1.0 * + 1.0 * number0 0.01 - 1.0 * number0 0.01 100.0"
@@ -112,7 +111,7 @@ class DataService():
                 linear_equation = '#'+str(0) + ": " + operation_dict[operations[0]] + ' ( '+numbers[i] + ', '+numbers[i+1]+' )' + ' | '
             else:
                 linear_equation = '#'+str(0) + ": " + operation_dict[operations[0]] + ' ( '+list_equation[i+1] + ', '+list_equation[i+2]+' )' + ' | '
-        
+
         elif len(operations) == 2:
             # if the pattern is operation2 operation1 numberX numberY numberZ
             operations = operations[::-1]
