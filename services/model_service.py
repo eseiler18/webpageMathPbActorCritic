@@ -54,7 +54,7 @@ class ModelService():
         output = self.tokenizer.decode(output[0], skip_special_tokens=True)
         if self.verbose:
             print("Output actor : " + output)
-        # element of history [problem, answer, hint (optional), new answer (optional)]
+        # element of history [problem, answer, hint (optional), new answer (optional),  hint (optional), new answer (optional)...]]
         # first model turn add problem and answer
         if turn == 1:
             # add problem and answer to output list
