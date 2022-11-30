@@ -60,9 +60,6 @@ class ModelService():
             # add problem and answer to output list
             self.history.append([input_str, output])
         elif turn == 2:
-            # if manual hint add hint to history (not add by the critic)
-            if len(self.history[-1]) < 3:
-                self.history[-1].append(hint)
             # add second turn answer to history
             self.history[-1].append(output)
         return output
@@ -92,6 +89,6 @@ class ModelService():
             print("Ouput critic: " + output)
 
         # add hint to the history
-        # element of history [problem, answer, hint (optional), new answer (optional)]
+        # element of history [problem, answer, hint (optional), new answer (optional), hint (optional), new answer (optional)...]
         self.history[-1].append(output)
         return output

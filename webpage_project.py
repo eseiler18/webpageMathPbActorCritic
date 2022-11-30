@@ -81,7 +81,7 @@ def callcritic():
         true_linear_formula = data_select["linear_equation"]
         hint = oracle_hint(generate_linear_formula, true_linear_formula)
         model.history[-1].append(hint)
-    return jsonify({"output": hint})
+    return jsonify({"output": hint, "true_linear_formula": true_linear_formula})
 
 
 @app.route('/performcritic', methods=['POST'])
@@ -89,8 +89,9 @@ def performcritic():
     critic_mode = request.json["critic_mode"]
     if critic_mode == "manual":
         hint = request.json["hint_input"]
+        model.history[-1].append(hint)
     else:
-        hint = model.history[-1][2]
+        hint = model.history[-1][-2]
     second_turn_answer = model.forward_actor_model(input_str=hint, turn=2)
     second_turn_answer = second_turn_answer.split("|")[:-1] # split and remove the last EOS
     return jsonify({"output": second_turn_answer})
