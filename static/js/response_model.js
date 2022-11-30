@@ -114,6 +114,7 @@ $('#ask_answer').change(function(e){
 
 function generate_critic(){
   var selected_value = $("input[name='critic_type']:checked").val();
+  $("#critic_response").html("")
   var critic = $("#critic");
   var active_critic = $("#active_critic");
   var content = "";
