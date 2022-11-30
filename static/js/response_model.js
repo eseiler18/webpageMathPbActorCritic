@@ -74,6 +74,11 @@ function reload_model_selection(){
     display_data = $("#display_data");
     var select_data = $("#select_data").val();
     if (select_data != -1){
+      $("#ask_answer").html("")
+      $("#answer_validity").html("")
+      $("#critic").html("")
+      $("#active_critic").html("")
+      $("#critic_response").html("")
       axios.post('/display_data', {"display_data": select_data})
         .then(function (response) {
           console.log(response);
