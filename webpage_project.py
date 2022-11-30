@@ -14,6 +14,7 @@ parser.add_argument('--random-data', default=False, type=bool,
                     help='true is data selection random')
 parser.add_argument('--verbose', default=False, type=bool,
                     help='dispay input of model')
+    
 
 
 app = Flask(__name__)

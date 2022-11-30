@@ -46,7 +46,7 @@ class ModelService():
 
         # tokenise input
         if self.verbose:
-            print("Input actor: " + input_ids)
+            print("Input actor: " + input_str)
         input_ids = self.tokenizer(input_str, return_tensors="pt").input_ids
         # model generate output
         output = self.actor_model.generate(input_ids, max_length=50)
@@ -82,7 +82,7 @@ class ModelService():
 
         # tokenise input
         if self.verbose:
-            print("Input critic: " + input_ids)
+            print("Input critic: " + input_str)
         input_ids = self.tokenizer(input_str, return_tensors="pt").input_ids
         # model generate output
         output = self.critic_model.generate(input_ids, max_length=50)
