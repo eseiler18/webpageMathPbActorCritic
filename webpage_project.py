@@ -24,7 +24,7 @@ parser.add_argument('--critc-path',
 # other
 parser.add_argument('--verbose', default=False, type=bool,
                     help='print input and output of models to help debugging')
-parser.add_argument('run-EPFL-cluster', default=True, type=bool,
+parser.add_argument('--run-EPFL-cluster', default=True, type=bool,
                     help='True if run on EPFL cluster else use the host')
 
 app = Flask(__name__)
