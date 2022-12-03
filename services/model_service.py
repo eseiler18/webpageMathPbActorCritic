@@ -27,7 +27,7 @@ class ModelService():
     def forward_actor_model(self, input_str, turn):
         """perform actor model forward for:
             1) first turn actor model: body + question -> answer
-            2) second turn actor model: body + question + answer + hint -> answer 
+            2) second turn actor model: body + question + answer + hint -> answer
         Args:
             input_str (str): body + question for first turn model, hint for second turn model
             turn (int): turn of the model (1 or 2).
@@ -61,7 +61,7 @@ class ModelService():
             self.history.append([input_str, output])
         elif turn == 2:
             # add second turn answer to history
-            self.history[-1].append(output)
+            self.history[-1].append(output)          
         return output
 
     def forward_critic_model(self):
