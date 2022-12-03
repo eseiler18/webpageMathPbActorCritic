@@ -53,9 +53,11 @@ def data_selection():
         # random data
         if args.random_data:
             all_index = [*range(data_service_train.n)]
-            ind_train = random.sample(all_index, args.data_number)
+            ind_train = random.sample(all_index,
+                                      args.data_number).astype("int64")
         else:
-            ind_train = np.linspace(0, data_service_train.n,  args.data_number)
+            ind_train = np.linspace(0, data_service_train.n-1,
+                                    args.data_number).astype("int64")
         math_pb = math_pb + data_service_train.math_pb[ind_train].tolist()
         label = label + data_service_train.label[ind_train].tolist()
     # test data
@@ -65,7 +67,8 @@ def data_selection():
             all_index = [*range(data_service_test.n)]
             ind_test = random.sample(all_index, args.data_number)
         else:
-            ind_test = np.linspace(0, data_service_test.n,  args.data_number)
+            ind_test = np.linspace(0, data_service_test.n-1,
+                                   args.data_number).astype("int64")
         math_pb = math_pb + data_service_test.math_pb[ind_test].tolist()
         label = label + data_service_test.label[ind_test].tolist()
     return jsonify({"math_pb": math_pb, "label": label})

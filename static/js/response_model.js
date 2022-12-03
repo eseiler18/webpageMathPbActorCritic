@@ -48,7 +48,6 @@ function reload_model_selection(){
           .then(function (response) {
             var select_data = $("#select_data");
             var options =  "<option value='-1' hidden>Choose a Math problem</option>" ;
-            // for (opt of response.data["math_pb"]){
             for (let [i, opt] of Object.entries(response.data["math_pb"])){
               options += "<option value='" + response.data["label"][i] + "'>" +  opt + "</option>";
             }
@@ -83,7 +82,7 @@ function reload_model_selection(){
       axios.post('/display_data', {"display_data": select_data})
         .then(function (response) {
           console.log(response);
-          var content = " <strong> " + response.data["label"] + "</strong>"
+          var content = " <strong> " + response.data["problem_select"] + "</strong>"
           display_data.html(content)
         })
       }
