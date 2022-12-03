@@ -130,7 +130,7 @@ function generate_critic(){
       content += "<input class='form-control' id='hint_input' placeholder='Follow hint template' autocomplete='off'></form>";
   } 
   else if(selected_value == "automatic"){
-      axios.post('/callcritic', {"critic_mode": selected_value}).then(function (response) {
+      axios.post('/call_critic', {"critic_mode": selected_value}).then(function (response) {
         content += "The critic model generate the hint : <strong> " + response.data["output"] + "</strong> </br>";
         critic.html(content);
       })
