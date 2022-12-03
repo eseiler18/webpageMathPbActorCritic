@@ -139,7 +139,7 @@ function generate_critic(){
     });
   }
   else if(selected_value == "oracle"){
-    axios.post('/callcritic', {"critic_mode": selected_value}).then(function (response) {
+    axios.post('/call_critic', {"critic_mode": selected_value}).then(function (response) {
       content += "Based on the true linear equation <strong>"  + response.data["true_linear_formula"] +"</strong> </br>"
       content += "The oracle hint is : <strong> " + response.data["output"] + "</strong> </br>";
       critic.html(content);
