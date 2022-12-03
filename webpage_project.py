@@ -18,7 +18,7 @@ parser.add_argument('--data-number', default=10, type=int,
 parser.add_argument('--actor-path',
                     default="static/model/output_reasoning_iteration",
                     type=str, help='path of the actor model')
-parser.add_argument('--critc-path',
+parser.add_argument('--critic-path',
                     default="static/model/critic",
                     type=str, help='path of the critic model')
 # other
