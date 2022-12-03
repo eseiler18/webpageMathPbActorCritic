@@ -10,7 +10,6 @@ $("#active_test").on('change', function(e) {
   reload_model_selection();
 });
 
-
 // load data from the checked dataset  
 function reload_model_selection(){
   var active_train = $("#active_train").is(":checked");
@@ -28,6 +27,7 @@ function reload_model_selection(){
             console.log(error);
           });
 }
+
 
 // action select data on the select bar
 // 1) send the label of the select data to the server
@@ -50,6 +50,7 @@ $("#select_data").on('change', function(e){
       })
   }
 });
+
 
 // action on the solve button
 // we want:
@@ -99,8 +100,6 @@ $("#action_select_data").on('click', function(e) {
           });
     }
   });
-
-
 
 
 // action on the radio for answer validity
@@ -181,6 +180,7 @@ function generate_critic(){
   }
   critic.html(content);
 }
+
 
 // action on the resolve button
 // we want:
