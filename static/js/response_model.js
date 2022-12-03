@@ -3,7 +3,7 @@ $("#action_select_data").on('click', function(e) {
     // recup la selection
     var select_data = $("#select_data").val();
     if (select_data != -1){
-        axios.post('/main2', {"select_data": select_data})
+        axios.post('/actor_first_turn', {"select_data": select_data})
           .then(function (response) {
             console.log(response);
             // disp answer of the model
@@ -44,7 +44,7 @@ $("#action_select_data").on('click', function(e) {
 function reload_model_selection(){
   var active_train = $("#active_train").is(":checked");
   var active_test = $("#active_test").is(":checked");
-  axios.post('/getdataset', {"active_train": active_train, "active_test": active_test} )
+  axios.post('/data_selection', {"active_train": active_train, "active_test": active_test} )
           .then(function (response) {
             var select_data = $("#select_data");
             var options =  "<option value='-1' hidden>Choose a Math problem</option>" ;
@@ -168,7 +168,7 @@ $("#active_critic").on('click', function(e) {
     var hint_input = "nan"
   }
   //div_response_model.html(content)
-  axios.post('/performcritic', {"critic_mode": critic_mode, "hint_input": hint_input}).then(function (response) {
+  axios.post('/actor_second_turn', {"critic_mode": critic_mode, "hint_input": hint_input}).then(function (response) {
           // disp response of the model
           var critic_response = $("#critic_response");
           var content = "The model with help of the critic generate : "
