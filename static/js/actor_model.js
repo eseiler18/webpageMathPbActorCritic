@@ -20,6 +20,7 @@ $("#action_select_data").on('click', function(e) {
         $("#active_critic").html("")
         $("#critic_response").html("")
         $("#response_model").html("")
+        $("#ask_answer").html("")
         // send to server
         axios.post('/actor_first_turn', {"select_data": select_data})
           .then(function (response) {
