@@ -22,7 +22,7 @@ parser.add_argument('--critic-path',
                     default="static/model/critic",
                     type=str, help='path of the critic model')
 # other
-parser.add_argument('--verbose', default=False, type=bool,
+parser.add_argument('--verbose', default=True, type=bool,
                     help='print input and output of models to help debugging')
 parser.add_argument('--run-EPFL-cluster', default=True, type=bool,
                     help='True if run on EPFL cluster else use the host')
