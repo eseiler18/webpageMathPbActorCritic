@@ -38,14 +38,15 @@ Test dataset 1000 math problem
 ```
 python3 webpage_project.py --args <value>
 ```
-Data specific args:
+### Argument
+Data specific:
 - `--random-data`: bool, random data proposed on the webpage (default = False) 
 - `--data-number`: int, number of data display in the select bar (default = 10)
 
-Model specific args:
+Model specific:
 - `--actor-path`: str, path of the actor model (default = "static/model/output_reasoning_iterationz) 
 - `--critic-path`: str, path of the critic model (default = "static/model/critic")
 
-Other args:
+Other:
 - `--verbose`: bool, print input and output of models to help debugging (default = True) 
 - `--run-EPFL-cluster`: bool, True if run on EPFL cluster else use the host (default = True)
