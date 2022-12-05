@@ -4,12 +4,6 @@ Webpage for result presentation of Actor Critic method for Math problem answerin
 Semester project of [Emilien Seiler](mailto:emilien.seiler@epfl.ch), Master in Computational Science and Engineering at EPFL. 
 Project in collaboration with Atificial Intelligence Laboratory and Natural Language Processing Laboratory at EPFL.
 
-## Installing
-To setup a miniconda environement
-```
-conda env create -f <path_to_environement.yml_file>
-```
-
 ## Structure
 
 This is the structure of the repository:
@@ -31,7 +25,7 @@ This is the structure of the repository:
     - `data_selection.js`: data selection related action
 - `templates`: html template page
   - `home.html`: home page
-- `requirement.txt`: python requierement
+- `requirement.txt`: python requirement
 - `webpage_project.py`: script for run the webpage (see args bellow)
 
 
@@ -42,25 +36,16 @@ Test dataset 1000 math problem
 
 ## Run
 ```
-python3 .py --epoch <nb_epoch> --batch <batch_size> --parquet-dir <path_to_parquet> --input-channels <channel 150 or 372>
+python3 webpage_project.py --args <value>
 ```
-To train on a pretrained model use:
-- `--prtrain-model`: str, name of the model file
-- `--prtrain-log`: str, name of the log file
-- `--prtrain-dir`: str, directory of the pretrained file
+Data specific args:
+- `--random-data`: bool, random data proposed on the webpage (default = False) 
+- `--data-number`: int, number of data display in the select bar (default = 10)
 
-To train on a Wavenet with other hyperparameters:
-- `--kernel-size`: int
-- `--stack-size`: int
-- `--layer-size`: int
-- `--nrecept`: int, depand of the three hyperparameter look in the [report](https://github.com/eseiler18/NuclearFusion/blob/main/Report_EmilienSeiler_SemesterProject_MasterCSE.pdf) Eq. 4
-- `--dropout`: float
+Model specific args:
+- `--actor-path`: str, path of the actor model (default = "static/model/output_reasoning_iterationz) 
+- `--critic-path`: str, path of the critic model (default = "static/model/critic")
 
-Other parameter
-- `--in-memory`: boolean, to keep all data in memory if you have enougth RAM
-- `--lr`: float, initial learning rate
-- `--validation`: boolean, split data in train and test set
-- `--split`: float, split ratio
-
-On lac10 cluster recommend batch-size < 12.  
-Model and log of the training will be save in `project/output` at the end of the training
+Other args:
+- `--verbose`: bool, print input and output of models to help debugging (default = True) 
+- `--run-EPFL-cluster`: bool, True if run on EPFL cluster else use the host (default = True)
