@@ -38,7 +38,7 @@ Test dataset 1000 math problem
 ```
 python3 webpage_project.py --args <value>
 ```
-### Argument
+#### Arguments: 
 Data specific:
 - `--random-data`: bool, random data proposed on the webpage (default = False) 
 - `--data-number`: int, number of data display in the select bar (default = 10)
