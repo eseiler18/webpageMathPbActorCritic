@@ -14,6 +14,12 @@ $("#action_select_data").on('click', function(e) {
     // get the select data label
     var select_data = $("#select_data").val();
     if (select_data != -1){
+        // remove section
+        $("#answer_validity").html("")
+        $("#critic").html("")
+        $("#active_critic").html("")
+        $("#critic_response").html("")
+        $("#response_model").html("")
         // send to server
         axios.post('/actor_first_turn', {"select_data": select_data})
           .then(function (response) {
@@ -40,12 +46,6 @@ $("#action_select_data").on('click', function(e) {
             ask += "<input type='radio' class='btn-check' name='options-outlined' id='danger-outlined' autocomplete='off' value='wrong' >"
             ask += "<label class='btn btn-outline-danger' for='danger-outlined'>Wrong</label>"
             answer_ask.html(ask);
-
-            // remove section
-            $("#answer_validity").html("")
-            $("#critic").html("")
-            $("#active_critic").html("")
-            $("#critic_response").html("")
           })
           .catch(function (error) {
             console.log(error);
