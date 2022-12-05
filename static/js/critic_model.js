@@ -30,6 +30,9 @@ function reload_answer_validity(){
         content += "<input class='form-check-input' type='radio' name='critic_type' id='oracle_critic' value='oracle'>";
         content += "<label class='form-check-label' for='critic_type'> Oracle critic </label></div>";
     }
+    $("#critic").html("")
+    $("#active_critic").html("")
+    $("#critic_response").html("")
     answer_validity.html(content);
 }
   
