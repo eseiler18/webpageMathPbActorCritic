@@ -8,7 +8,7 @@ from flask import request, jsonify
 from services.model_service import ModelService
 from services.data_service import DataService, oracle_hint
 
-parser = argparse.ArgumentParser(description='disruption prediction JET')
+parser = argparse.ArgumentParser(description='webpage actor critic')
 # data specific
 parser.add_argument('--random-data', default=False, type=bool,
                     help='true is data selection random')
