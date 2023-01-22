@@ -87,14 +87,12 @@
       <br>
       <br>
       <div style="text-align: justify;">
-        <img src="../static/img/transformer.png" width="400" 
-        height="500"style="float: right; padding-left: 0px; padding-right: 0px; padding-bottom: 0px;">
-        <p> We tackle the problem of training large language models to align to measures of human preferences. We note that many Natural Language Processing (NLP) tasks can be framed as sequence learning problems, with multitudes of non-differentiable automated metrics designed to grade performance by mimicking human judgements for the task.</p>
-        <p> Reinforcement Learning (RL) is a powerful paradigm for solving sequential tasks that learn from such scalar feedback and yet the use of RL for NLP tasks is severely hindered by a series of important, yet often undocumented pitfalls including: training instability of RL algorithms with combinatorially-sized language action spaces; high variance in automated NLP metrics to be used for feedback in the form of rewards; and reward hacking where a metric is state-of-the-art but the underlying spirit of the task remains unsolved.</p>
-        <p>The RL4LMs project attempts to alleviate these pitfalls by:</p>
-        <p> (1) providing guidelines for when RL should be used and what kinds of current NLP tasks and metrics are best suited for it in the form of a new ever-evolving benchmark dubbed GRUE (General Reinforced-language Understanding Evaluation);</p>
-        <p> (2) demonstrating how to use RL for language via a novel RL algorithm NLPO (Natural Language Policy Optimization) created to be more stable and less susceptible to both large language action spaces and high variance in rewards; </p>
-        <p> (3) A practical day-to-day guide including high-quality implementations and hyperparameters of NLPO along with multiple existing online RL algorithms such as PPO and A2C to train any causal or seq2seq transformer in the popular HuggingFace library. </p>
+        <img src="../static/img/AC_math_schema.png" width="450" 
+        height="350"style="float: right; padding-left: 0px; padding-right: 0px; padding-bottom: 0px;">
+        <p> Welcome to our website where you can try out the Actor-Critic Algorithm method! This algorithm combines both the actor and the critic into a single framework to learn a policy for decision-making in an environment.</p>
+        <p> The actor is responsible for taking actions based on the current state, while the critic evaluates the actor's actions and provides feedback. In the context of natural language processing, we are using the T5 transformer, a powerful language model known for its high performance on various NLP tasks, including question answering.
+        <p> By integrating the T5 transformer with the actor critic algorithm, we are training a model that can accurately answer math questions by taking into account the feedback from the critic. This project represents an exciting opportunity to push the boundaries of what is possible with natural language processing and further our understanding of how these technologies can be applied in practical settings.
+        <p> On this website, you can input math questions and see the model's answers for yourself. Give it a try and see the power of the actor-critic algorithm and T5 transformer in action!
       </div>
       <br>
       <div >
